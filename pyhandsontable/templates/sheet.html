@@ -3,11 +3,18 @@
   <head>
     <meta charset="utf-8">
 
-    <link href="{{ hot_css | default('https://cdn.jsdelivr.net/npm/handsontable-pro@5.0.0/dist/handsontable.full.min.css') }}" rel="stylesheet" media="screen">
+    <link href="{{ css | default('https://cdn.jsdelivr.net/npm/handsontable-pro@5.0.0/dist/handsontable.full.min.css') }}" rel="stylesheet" media="screen">
+    <link href="{{ css_custom | default('#') }}" rel="stylesheet">
     <style>
 #hotArea {
-  width: {{ width|default('auto') }};
-  height: {{ height|default('auto') }};
+  {% if width is defined %}
+    width: {{ width }} + 'px';
+  {% endif %}
+
+  {% if height is defined %}
+    height: {{ height }} + 'px';
+  {% endif %}
+
   {% if width is defined or height is defined %}
   overflow: hidden;
   {% endif %}
@@ -19,10 +26,11 @@
   <body>
     <div id="hotArea"></div>
 
-    <script src="{{ hot_js | default('https://cdn.jsdelivr.net/npm/handsontable-pro@5.0.0/dist/handsontable.full.min.js') }}"></script>
+    <script src="{{ js | default('https://cdn.jsdelivr.net/npm/handsontable-pro@5.0.0/dist/handsontable.full.min.js') }}"></script>
 
     <script>var data = {{ data|safe }};</script>
     <script>var config = {{ config|default('{}') }};</script>
+    <script>var maxColWidth = {{ maxColWidth|default('200') }};</script>
     <script>
       var container = document.getElementById('hotArea');
       var actualConfig = {
@@ -31,12 +39,20 @@
       var defaultConfig = {
         rowHeaders: true,
         colHeaders: true,
-        dropDownMenu: true,
-        filter: true,
-        colWidths: 200
+        dropdownMenu: true,
+        filters: true,
+        modifyColWidth: function(width, col){
+          if(width > maxColWidth) return maxColWidth;
+        }
       }
-      actualConfig = Object.assign(config || defaultConfig, actualConfig);
+      config = Object.assign(defaultConfig, config);
+      actualConfig = Object.assign(config, actualConfig);
+    </script>
+
+    <script src="{{ js_pre | default('#') }}"></script>
+    <script>
       var hot = new Handsontable(container, actualConfig);
     </script>
+    <script src="{{ js_post | default('#') }}"></script>
   </body>
 </html>

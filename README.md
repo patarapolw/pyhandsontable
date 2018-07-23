@@ -12,8 +12,12 @@ View a 2-D array, probably from [pyexcel](https://github.com/pyexcel/pyexcel) in
 ## Acceptable kwargs
 
 - title: title of the HTML file
-- hot_css: url of the Handsontable CSS
-- hot_js: url of the Handsontable Javascript
+- maxColWidth: maximum column width. Set to 200.
+- css: url of the Handsontable CSS
+- js: url of the Handsontable Javascript
+- css_custom: your custom CSS
+- js_pre: Javascript before rendering the table (but after most other things.)
+- js_post: Javascript after rendering the table.
 - config: add additional config as defined in https://docs.handsontable.com/pro/5.0.0/tutorial-introduction.html
   - This will override the default config (per key basis) which are:
   
@@ -21,8 +25,10 @@ View a 2-D array, probably from [pyexcel](https://github.com/pyexcel/pyexcel) in
 {
   rowHeaders: true,
   colHeaders: true,
-  dropDownMenu: true,
-  filter: true,
-  colWidths: 200
+  dropdownMenu: true,
+  filters: true,
+  modifyColWidth: function(width, col){
+    if(width > maxColWidth) return maxColWidth;
+  }
 }
 ```
