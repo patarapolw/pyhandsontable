@@ -8,11 +8,11 @@
     <style>
 #hotArea {
   {% if width is defined %}
-    width: {{ width }} + 'px';
+    width: {{ width }}px;
   {% endif %}
 
   {% if height is defined %}
-    height: {{ height }} + 'px';
+    height: {{ height }}px;
   {% endif %}
 
   {% if width is defined or height is defined %}
@@ -49,10 +49,16 @@
       actualConfig = Object.assign(config, actualConfig);
     </script>
 
-    <script src="{{ js_pre | default('#') }}"></script>
+    {% if js_pre is defined %}
+      <script src="{{ js_pre }}"></script>
+    {% endif %}
+
     <script>
       var hot = new Handsontable(container, actualConfig);
     </script>
-    <script src="{{ js_post | default('#') }}"></script>
+
+    {% if js_post is defined %}
+      <script src="{{ js_post }}"></script>
+    {% endif %}
   </body>
 </html>
