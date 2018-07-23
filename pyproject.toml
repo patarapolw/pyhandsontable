@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pyhandsontable"
-version = "0.1.0"
+version = "0.1.1"
 description = "Bring the power of Handsontable to Python and Jupyter Notebook"
 authors = ["Pacharapol Withayasakpunt <patarapolw@gmail.com>"]
 license = "MIT"
@@ -9,7 +9,7 @@ repository = "https://github.com/patarapolw/pyhandsontable"
 homepage = "https://github.com/patarapolw/pyhandsontable"
 keywords = ['handsontable']
 
-include = ['pyhandsontable/templates/*']
+#include = ['pyhandsontable/templates/*']
 
 [tool.poetry.dependencies]
 python = "*"
