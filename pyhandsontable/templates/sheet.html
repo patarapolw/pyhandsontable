@@ -4,7 +4,6 @@
     <meta charset="utf-8">
 
     <link href="{{ css | default('https://cdn.jsdelivr.net/npm/handsontable-pro@5.0.0/dist/handsontable.full.min.css') }}" rel="stylesheet" media="screen">
-    <link href="{{ css_custom | default('#') }}" rel="stylesheet">
     <style>
 #hotArea {
   {% if width is defined %}
@@ -49,16 +48,8 @@
       actualConfig = Object.assign(config, actualConfig);
     </script>
 
-    {% if js_pre is defined %}
-      <script src="{{ js_pre }}"></script>
-    {% endif %}
-
     <script>
       var hot = new Handsontable(container, actualConfig);
     </script>
-
-    {% if js_post is defined %}
-      <script src="{{ js_post }}"></script>
-    {% endif %}
   </body>
 </html>

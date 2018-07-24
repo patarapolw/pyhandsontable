@@ -14,14 +14,15 @@ def generate_html(data, **kwargs):
     return template.render(data=data, **kwargs)
 
 
-def view_table(data, width=800, height=500, **kwargs):
+def view_table(data, width=800, height=500,
+               filename='temp.handsontable.html', autodelete=True, **kwargs):
     # A TemporaryFile does not work with Jupyter Notebook
 
-    html_file = 'temp.handsontable.html'
     try:
-        with open(html_file, 'w') as f:
+        with open(filename, 'w') as f:
             f.write(generate_html(data=data, width=width, height=height, **kwargs))
 
-        return IFrame(html_file, width=width, height=height)
+        return IFrame(filename, width=width, height=height)
     finally:
-        Timer(5, os.unlink, args=[html_file]).start()
+        if autodelete:
+            Timer(5, os.unlink, args=[filename]).start()
