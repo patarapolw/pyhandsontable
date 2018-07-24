@@ -42,3 +42,65 @@ pip install pyhandsontable
   }
 }
 ```
+
+## Post-creation editing of the HTML
+
+You might try `from bs4 import BeautifulSoup`:
+
+```python
+        config = {
+            'colHeaders': ['id'] + list(CardTuple._fields),
+            'columns': [
+                {'data': 0},
+                {'data': 1, 'renderer': 'markdownRenderer'},
+                {'data': 2, 'renderer': 'markdownRenderer'},
+                {'data': 3},
+                {'data': 4}
+            ]
+        }
+        
+        filename = 'temp.handsontable.html'
+        try:
+            table = view_table(data=([[i] + list(record.to_formatted_tuple())
+                                 for i, record in self.find(keyword_regex, tags)]),
+                               width=width,
+                               height=height,
+                               config=config,
+                               filename=filename,
+                               autodelete=False)
+            with open(filename, 'r') as f:
+                soup = BeautifulSoup(f.read(), 'html.parser')
+
+            div = soup.new_tag('div')
+
+            js_markdown = soup.new_tag('script',
+                                       src='https://cdn.rawgit.com/showdownjs/showdown/1.8.6/dist/showdown.min.js')
+            js_custom = soup.new_tag('script')
+
+            with open('gflashcards/js/markdown-hot.js') as f:
+                js_custom.append(f.read())
+
+            div.append(js_markdown)
+            div.append(js_custom)
+
+            script_tag = soup.find('script')
+            soup.body.insert(soup.body.contents.index(script_tag) + 1, div)
+
+            with open(filename, 'w') as f:
+                f.write(str(soup))
+
+            return table
+        finally:
+            Timer(5, os.unlink, args=[filename]).start()
+```
+
+[Source](https://github.com/patarapolw/gflashcards/blob/master/gflashcards/app.py#L93)
+
+## Screenshots
+
+<img src="https://github.com/patarapolw/pyhandsontable/blob/master/screenshots/0.png" />
+
+## Related projects
+
+- https://github.com/patarapolw/gflashcards
+- https://github.com/patarapolw/jupyter-flashcards
