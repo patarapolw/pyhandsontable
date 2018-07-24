@@ -1,6 +1,7 @@
 from jinja2 import Environment, PackageLoader
 from threading import Timer
 import os
+import json
 from IPython.display import IFrame
 
 env = Environment(
@@ -11,7 +12,7 @@ env = Environment(
 def generate_html(data, **kwargs):
     template = env.get_template('sheet.html')
 
-    return template.render(data=data, **kwargs)
+    return template.render(data=json.dumps(data), **kwargs)
 
 
 def view_table(data, width=800, height=500,
