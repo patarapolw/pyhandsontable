@@ -16,8 +16,9 @@ pip install pyhandsontable
 ## Usage
 
 ```python
->>> from pyhandsontable import generate_html, view_table
+>>> from pyhandsontable import view_table
 >>> view_table(width=800, height=500, data=data_matrix, **kwargs)
+A Handsontable is shown in Jupyter Notebook.
 ```
 
 ## Acceptable kwargs
