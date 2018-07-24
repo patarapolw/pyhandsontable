@@ -1,4 +1,5 @@
 import pytest
+from pathlib import Path
 
 from pyhandsontable import generate_html
 
@@ -7,5 +8,5 @@ from pyhandsontable import generate_html
     {'data': []}
 ])
 def test_generate(kwargs, request):
-    with open('tests/output/' + request.node.name + '.html', 'w') as f:
+    with Path('tests/output').joinpath(request.node.name + '.html').open('w') as f:
         f.write(generate_html(**kwargs))
