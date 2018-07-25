@@ -102,8 +102,8 @@ You might try `from bs4 import BeautifulSoup`:
             div.append(js_markdown)
             div.append(js_custom)
 
-            script_tag = soup.find('script')
-            soup.body.insert(soup.body.contents.index(script_tag) + 1, div)
+            script_tag = soup.find('script', {'id': 'generateHandsontable'})
+            soup.body.insert(soup.body.contents.index(script_tag), div)
 
             with open(filename, 'w') as f:
                 f.write(str(soup))
