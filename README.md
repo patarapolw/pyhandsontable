@@ -68,18 +68,27 @@ or if your data is list of dict:
 
 You might try `from bs4 import BeautifulSoup`:
 
-```python
+        renderers = {
+            1: 'markdownRenderer',
+            2: 'markdownRenderer'
+        }
+        config = {
+            'colHeaders': ['id'] + list(CardTuple._fields),
+            'rowHeaders': False
+        }
+
         filename = 'temp.handsontable.html'
         try:
             table = view_table(data=([[i] + list(record.to_formatted_tuple())
-                                 for i, record in self.find(keyword_regex, tags)]),
+                                      for i, record in self.find(keyword_regex, tags)]),
                                width=width,
                                height=height,
+                               renderers=renderers,
                                config=config,
                                filename=filename,
                                autodelete=False)
             with open(filename, 'r') as f:
-                soup = BeautifulSoup(f.read(), 'html.parser')
+                soup = BeautifulSoup(f.read(), 'html5lib')
 
             div = soup.new_tag('div')
 
@@ -102,7 +111,6 @@ You might try `from bs4 import BeautifulSoup`:
             return table
         finally:
             Timer(5, os.unlink, args=[filename]).start()
-```
 
 [Source](https://github.com/patarapolw/gflashcards/blob/master/gflashcards/app.py#L93)
 
