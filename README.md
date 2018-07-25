@@ -25,6 +25,7 @@ A Handsontable is shown in Jupyter Notebook.
 
 - title: title of the HTML file
 - maxColWidth: maximum column width. (Default: 200)
+- renderers: the renderers to use in generating the columns (see below.)
 - autodelete: whether the temporary HTML file should be autodeleted. (Default: True)
 - filename: filename of the temporary HTML file (default: 'temp.handsontable.html')
 - css: url of the Handsontable CSS
@@ -45,22 +46,29 @@ A Handsontable is shown in Jupyter Notebook.
 }
 ```
 
+`renderers` example, if your data is a 2-D array:
+
+```python
+{
+    1: 'html',
+    2: 'html'
+}
+```
+
+or if your data is list of dict:
+
+```python
+{
+    "front": 'html',
+    "back": 'html'
+}
+```
+
 ## Post-creation editing of the HTML
 
 You might try `from bs4 import BeautifulSoup`:
 
 ```python
-        config = {
-            'colHeaders': ['id'] + list(CardTuple._fields),
-            'columns': [
-                {'data': 0},
-                {'data': 1, 'renderer': 'markdownRenderer'},
-                {'data': 2, 'renderer': 'markdownRenderer'},
-                {'data': 3},
-                {'data': 4}
-            ]
-        }
-        
         filename = 'temp.handsontable.html'
         try:
             table = view_table(data=([[i] + list(record.to_formatted_tuple())
