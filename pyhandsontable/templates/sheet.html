@@ -27,22 +27,17 @@
 
     <script src="{{ js | default('https://cdn.jsdelivr.net/npm/handsontable-pro@5.0.0/dist/handsontable.full.min.js') }}"></script>
 
-    <script>var data = {{ data|tojson }};</script>
-    <script>var columns = {{ columns|tojson }};</script>
-    <script>var colHeaders = {{ colHeaders|tojson }};</script>
-    <script>var rowHeaders = {{ rowHeaders|tojson }};</script>
-
+    <script>var data = {{ data|default('""') }};</script>
     <script>var config = {{ config|default('{}')|tojson }};</script>
     <script>var maxColWidth = {{ maxColWidth|default('200') }};</script>
     <script>
       var container = document.getElementById('hotArea');
-      var defaultConfig = {
-        data: data,
-        rowHeaders: rowHeaders,
-        colHeaders: colHeaders,
+      var actualConfig = {
+        data: data
+        rowHeaders: true,
+        colHeaders: true,
         dropdownMenu: true,
         filters: true,
-        columns: columns,
         modifyColWidth: function(width, col){
           if(width > maxColWidth) return maxColWidth;
         }
@@ -50,7 +45,7 @@
       config = Object.assign(defaultConfig, config);
     </script>
 
-    <script id="generateHandsontable">
+    <script>
       var hot = new Handsontable(container, config);
     </script>
   </body>
