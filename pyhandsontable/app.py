@@ -1,7 +1,7 @@
 from jinja2 import Environment, PackageLoader
 from threading import Timer
 import os
-import json
+from collections import OrderedDict
 from IPython.display import IFrame
 
 env = Environment(
@@ -10,9 +10,28 @@ env = Environment(
 
 
 def generate_html(data, **kwargs):
-    template = env.get_template('sheet.html')
+    if not data:
+        raise ValueError('Please input some data.')
 
-    return template.render(data=json.dumps(data), **kwargs)
+    columns = list()
+    if isinstance(data[0], (dict, OrderedDict)):
+        colHeaders = kwargs.get('colHeaders', data[0].keys())
+    else:
+        colHeaders = kwargs.get('colHeaders', range(len(data[0])))
+
+    for header in colHeaders:
+        entry = {'data': header}
+        if 'renderers' in kwargs.keys():
+            entry['renderer'] = kwargs['renderers'].get(header)
+        columns.append(entry)
+
+    colHeaders = kwargs.get('colHeaders', True)
+    rowHeaders = kwargs.get('rowHeaders', True)
+
+    template = env.get_template('sheet.html')
+    return template.render(data=data,
+                           columns=columns, colHeaders=colHeaders, rowHeaders=rowHeaders,
+                           **kwargs)
 
 
 def view_table(data, width=800, height=500,
