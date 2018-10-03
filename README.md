@@ -5,7 +5,7 @@
 [![PyPI license](https://img.shields.io/pypi/l/pyhandsontable.svg)](https://pypi.python.org/pypi/pyhandsontable/)
 [![PyPI pyversions](https://img.shields.io/pypi/pyversions/pyhandsontable.svg)](https://pypi.python.org/pypi/pyhandsontable/)
 
-View a 2-D array, probably from [pyexcel](https://github.com/pyexcel/pyexcel) in Jupyter Notebook, and export to `*.html`.
+View a list of dictionaries or a 2-D array, in HandsOnTable, in Jupyter Notebook.
 
 ## Installation
 
