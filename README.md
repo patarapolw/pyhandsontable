@@ -7,6 +7,8 @@
 
 View a list of dictionaries or a 2-D array, in HandsOnTable, in Jupyter Notebook.
 
+Nested JSON renderer is also supported and is default. Image and markdown renderers are possible, but has to be extended.
+
 ## Installation
 
 ```commandline
@@ -137,6 +139,7 @@ You might try `from bs4 import BeautifulSoup`:
 ## Screenshots
 
 ![0.png](/screenshots/0.png?raw=true)
+![1.png](/screenshots/1.png?raw=true)
 
 ## Related projects
 
