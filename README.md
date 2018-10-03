@@ -15,14 +15,34 @@ pip install pyhandsontable
 
 ## Usage
 
+In Jupyter Notebook,
+
+```python
+>>> from pyhandsontable import PagedViewer
+>>> viewer = PagedViewer(data=data_matrix, **kwargs)
+>>> viewer
+'A Handsontable is shown in Jupyter Notebook.'
+>>> viewer.view(-1)
+'The last page is shown.'
+>>> viewer.previous()
+'The previous page (i-1) is shown.'
+>>> viewer.next()
+'The next page (i+1) is shown.'
+```
+
+Data matrix can be either a list of lists (2-D array) or a list of dictionaries.
+
+It is also possible to view all entries at once, but it could be bad, if there are too many rows.
+
 ```python
 >>> from pyhandsontable import view_table
->>> view_table(width=800, height=500, data=data_matrix, **kwargs)
-A Handsontable is shown in Jupyter Notebook.
+>>> view_table(data_matrix, **kwargs)
 ```
 
 ## Acceptable kwargs
 
+- height: height of the window (default: 500)
+- width: width of the window (default: 1000)
 - title: title of the HTML file
 - maxColWidth: maximum column width. (Default: 200)
 - renderers: the renderers to use in generating the columns (see below.)
@@ -116,7 +136,7 @@ You might try `from bs4 import BeautifulSoup`:
 
 ## Screenshots
 
-<img src="https://github.com/patarapolw/pyhandsontable/blob/master/screenshots/0.png" />
+![0.png](/screenshots/0.png?raw=true)
 
 ## Related projects
 

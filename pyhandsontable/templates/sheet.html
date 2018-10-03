@@ -32,6 +32,55 @@
     <script>var maxColWidth = {{ maxColWidth|default('200') }};</script>
     <script>var columns = {{ columns|tojson }};</script>
     <script>
+      var stringConstructor = "test".constructor;
+      var arrayConstructor = [].constructor;
+      var objectConstructor = {}.constructor;
+
+      function whatIsIt(object) {
+          if (object === null) {
+              return "null";
+          }
+          else if (object === undefined) {
+              return "undefined";
+          }
+          else if (object.constructor === stringConstructor) {
+              return "String";
+          }
+          else if (object.constructor === arrayConstructor) {
+              return "Array";
+          }
+          else if (object.constructor === objectConstructor) {
+              return "Object";
+          }
+          else {
+              return "don't know";
+          }
+      }
+      (function(Handsontable){
+        function customRenderer(hotInstance, td, row, column, prop, value, cellProperties) {
+          let text;
+          switch(whatIsIt(value)){
+            case "Object":
+              text = '<pre>' + JSON.stringify(value, null, 2) + '</pre>';
+              break;
+            /*case "Array":
+              text = '<pre>' + JSON.stringify(value) + '</pre>';
+              break;*/
+            default:
+              text = Handsontable.helper.stringify(value);
+          }
+
+          td.innerHTML = text;
+
+          return td;
+        }
+
+        // Register an alias
+        Handsontable.renderers.registerRenderer('jsonRenderer', customRenderer);
+
+      })(Handsontable);
+    </script>
+    <script>
       var container = document.getElementById('hotArea');
       var actualConfig = {
         data: data,
@@ -49,6 +98,18 @@
 
     <script id="generateHandsontable">
       var hot = new Handsontable(container, config);
+      let colWidths = [];
+      [...Array(hot.countCols()).keys()].map(i => {
+          colWidths.push(hot.getColWidth(i));
+      });
+
+      hot.updateSettings({
+          colWidths: colWidths
+      });
+
+      hot.updateSettings({
+          modifyColWidth: ()=>{}
+      });
     </script>
   </body>
 </html>

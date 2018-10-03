@@ -11,16 +11,19 @@ env = Environment(
 
 def generate_html(data, **kwargs):
     renderers = kwargs.pop('renderers', dict())
+    config = kwargs.pop('config', dict())
 
     if isinstance(data[0], (dict, OrderedDict)):
-        headers = data[0].keys()
+        headers = list(set(sum((list(d.keys()) for d in data), list())))
+        config['colHeaders'] = list(headers)
     else:
         headers = range(len(data[0]))
 
     columns = []
     for header in headers:
         columnData = {
-            'data': header
+            'data': header,
+            'renderer': 'jsonRenderer'
         }
         if header in renderers.keys():
             columnData['renderer'] = renderers.get(header)
@@ -28,10 +31,10 @@ def generate_html(data, **kwargs):
 
     template = env.get_template('sheet.html')
 
-    return template.render(data=data, columns=columns, **kwargs)
+    return template.render(data=data, columns=columns, config=config, **kwargs)
 
 
-def view_table(data, width=800, height=500,
+def view_table(data, width=1000, height=500,
                filename='temp.handsontable.html', autodelete=True, **kwargs):
     # A TemporaryFile does not work with Jupyter Notebook
 
