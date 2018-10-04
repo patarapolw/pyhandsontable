@@ -94,15 +94,32 @@
           if(width > maxColWidth) return maxColWidth;
         }
       }
-      config = Object.assign(actualConfig, config);
+      Object.assign(actualConfig, config);
+      actualConfig.colWidths = undefined;
     </script>
 
     <script id="generateHandsontable">
-      var hot = new Handsontable(container, config);
+      var hot = new Handsontable(container, actualConfig);
+
       let colWidths = [];
       [...Array(hot.countCols()).keys()].map(i => {
           colWidths.push(hot.getColWidth(i));
       });
+
+      switch(whatIsIt(config.colWidths)){
+        case "Array":
+          config.colWidths.forEach((item, index)=>{
+            colWidths[index] = item;
+          });
+          break;
+        case "Object":
+          const colHeaders = hot.getColHeader();
+          Object.keys(config.colWidths).forEach((item, index)=>{
+            colWidths[colHeaders.indexOf(item)] = config.colWidths[item];
+          });
+          break;
+        default:
+      }
 
       hot.updateSettings({
           colWidths: colWidths

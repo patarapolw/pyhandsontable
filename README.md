@@ -5,7 +5,7 @@
 [![PyPI license](https://img.shields.io/pypi/l/pyhandsontable.svg)](https://pypi.python.org/pypi/pyhandsontable/)
 [![PyPI pyversions](https://img.shields.io/pypi/pyversions/pyhandsontable.svg)](https://pypi.python.org/pypi/pyhandsontable/)
 
-View a list of dictionaries or a 2-D array, in HandsOnTable, in Jupyter Notebook.
+View a list of JSON-serializable dictionaries or a 2-D array, in HandsOnTable, in Jupyter Notebook.
 
 Nested JSON renderer is also supported and is default. Image and markdown renderers are possible, but has to be extended.
 
