@@ -102,11 +102,11 @@ markdown_html = markdown(markdown_raw)
 Any then,
 
 ```python
-{
+PagedViewer(data=data_matrix, renderers={
     "image_field": "html",
     "html_field": "html",
     "markdown_field": "html"
-}
+})
 ```
 
 ## Screenshots
