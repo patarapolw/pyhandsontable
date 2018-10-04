@@ -14,7 +14,8 @@ def generate_html(data, **kwargs):
     config = kwargs.pop('config', dict())
 
     if isinstance(data[0], (dict, OrderedDict)):
-        headers = list(set(sum((list(d.keys()) for d in data), list())))
+        headers = sum((list(d.keys()) for d in data), list())
+        headers = [h for i, h in enumerate(headers) if h not in headers[:i]]
         config['colHeaders'] = list(headers)
     else:
         headers = range(len(data[0]))

@@ -56,6 +56,7 @@
               return "don't know";
           }
       }
+      
       (function(Handsontable){
         function customRenderer(hotInstance, td, row, column, prop, value, cellProperties) {
           let text;
@@ -63,9 +64,9 @@
             case "Object":
               text = '<pre>' + JSON.stringify(value, null, 2) + '</pre>';
               break;
-            /*case "Array":
+            case "Array":
               text = '<pre>' + JSON.stringify(value) + '</pre>';
-              break;*/
+              break;
             default:
               text = Handsontable.helper.stringify(value);
           }
@@ -87,8 +88,8 @@
         rowHeaders: true,
         colHeaders: true,
         columns: columns,
-        dropdownMenu: true,
-        filters: true,
+        manualColumnResize: true,
+        manualRowResize: true,
         modifyColWidth: function(width, col){
           if(width > maxColWidth) return maxColWidth;
         }

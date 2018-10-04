@@ -57,14 +57,15 @@ It is also possible to view all entries at once, but it could be bad, if there a
   
 ```javascript
 {
-  data: data
-  rowHeaders: true,
-  colHeaders: true,
-  dropdownMenu: true,
-  filters: true,
-  modifyColWidth: function(width, col){
-    if(width > maxColWidth) return maxColWidth;
-  }
+    data: data,
+    rowHeaders: true,
+    colHeaders: true,
+    columns: columns,
+    manualColumnResize: true,
+    manualRowResize: true,
+    modifyColWidth: function(width, col){
+        if(width > maxColWidth) return maxColWidth;
+    }
 }
 ```
 
@@ -86,62 +87,33 @@ or if your data is list of dict:
 }
 ```
 
-## Post-creation editing of the HTML
+## Enabling Image, HTML and Markdown renderer
 
-You might try `from bs4 import BeautifulSoup`:
+This can be done in Python side, by converting everything to HTML. Just use [any markdown for Python library](https://github.com/Python-Markdown/markdown).
 
-        renderers = {
-            1: 'markdownRenderer',
-            2: 'markdownRenderer'
-        }
-        config = {
-            'colHeaders': ['id'] + list(CardTuple._fields),
-            'rowHeaders': False
-        }
+```python
+from markdown import markdown
+import base64
+image_html = f'<img src="{image_url}" width=100 />'
+image_html2 = f'<img src="data:image/png;base64,{base64.b64encode(image_bytes).decode()}" />'
+markdown_html = markdown(markdown_raw)
+```
 
-        filename = 'temp.handsontable.html'
-        try:
-            table = view_table(data=([[i] + list(record.to_formatted_tuple())
-                                      for i, record in self.find(keyword_regex, tags)]),
-                               width=width,
-                               height=height,
-                               renderers=renderers,
-                               config=config,
-                               filename=filename,
-                               autodelete=False)
-            with open(filename, 'r') as f:
-                soup = BeautifulSoup(f.read(), 'html5lib')
+Any then,
 
-            div = soup.new_tag('div')
-
-            js_markdown = soup.new_tag('script',
-                                       src='https://cdn.rawgit.com/showdownjs/showdown/1.8.6/dist/showdown.min.js')
-            js_custom = soup.new_tag('script')
-
-            with open('gflashcards/js/markdown-hot.js') as f:
-                js_custom.append(f.read())
-
-            div.append(js_markdown)
-            div.append(js_custom)
-
-            script_tag = soup.find('script', {'id': 'generateHandsontable'})
-            soup.body.insert(soup.body.contents.index(script_tag), div)
-
-            with open(filename, 'w') as f:
-                f.write(str(soup))
-
-            return table
-        finally:
-            Timer(5, os.unlink, args=[filename]).start()
-
-[Source](https://github.com/patarapolw/gflashcards/blob/master/gflashcards/app.py#L93)
+```python
+{
+    "image_field": "html",
+    "html_field": "html",
+    "markdown_field": "html"
+}
+```
 
 ## Screenshots
 
-![0.png](/screenshots/0.png?raw=true)
 ![1.png](/screenshots/1.png?raw=true)
+![0.png](/screenshots/0.png?raw=true)
 
 ## Related projects
 
-- https://github.com/patarapolw/gflashcards
-- https://github.com/patarapolw/jupyter-flashcards
+- https://github.com/patarapolw/tinydb-viewer
