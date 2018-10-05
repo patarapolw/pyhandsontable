@@ -18,6 +18,10 @@
   overflow: hidden;
   {% endif %}
 }
+
+.cell {
+  word-break: break-word;
+}
     </style>
 
     <title>{{ title }}</title>
@@ -62,13 +66,13 @@
           let text;
           switch(whatIsIt(value)){
             case "Object":
-              text = '<pre>' + JSON.stringify(value, null, 2) + '</pre>';
+              text = '<pre class="cell">' + JSON.stringify(value, null, 2) + '</pre>';
               break;
             case "Array":
-              text = '<pre>' + JSON.stringify(value) + '</pre>';
+              text = '<div class="cell">' + JSON.stringify(value) + '</div>';
               break;
             default:
-              text = Handsontable.helper.stringify(value);
+              text = '<div class="cell">' + Handsontable.helper.stringify(value) + '</div>';
           }
 
           td.innerHTML = text;
