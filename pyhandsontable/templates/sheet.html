@@ -22,6 +22,10 @@
 .cell {
   word-break: break-word;
 }
+.wrapper {
+  overflow: scroll;
+  max-height: {{ maxRowHeight|default('500') }}px;
+}
     </style>
 
     <title>{{ title }}</title>
@@ -36,29 +40,35 @@
     <script>var maxColWidth = {{ maxColWidth|default('200') }};</script>
     <script>var columns = {{ columns|tojson }};</script>
     <script>
-      var stringConstructor = "test".constructor;
-      var arrayConstructor = [].constructor;
-      var objectConstructor = {}.constructor;
-
       function whatIsIt(object) {
-          if (object === null) {
-              return "null";
-          }
-          else if (object === undefined) {
-              return "undefined";
-          }
-          else if (object.constructor === stringConstructor) {
-              return "String";
-          }
-          else if (object.constructor === arrayConstructor) {
-              return "Array";
-          }
-          else if (object.constructor === objectConstructor) {
-              return "Object";
-          }
-          else {
-              return "don't know";
-          }
+        var stringConstructor = "test".constructor;
+        var arrayConstructor = [].constructor;
+        var objectConstructor = {}.constructor;
+
+        if (object === null) {
+            return "null";
+        }
+        else if (object === undefined) {
+            return "undefined";
+        }
+        else if (object.constructor === stringConstructor) {
+            return "String";
+        }
+        else if (object.constructor === arrayConstructor) {
+            return "Array";
+        }
+        else if (object.constructor === objectConstructor) {
+            return "Object";
+        }
+        else {
+            return "don't know";
+        }
+      }
+
+      function escapeHTML(unsafeText) {
+        let div = document.createElement('div');
+        div.innerText = unsafeText;
+        return div.innerHTML;
       }
       
       (function(Handsontable){
@@ -69,20 +79,17 @@
               text = '<pre class="cell">' + JSON.stringify(value, null, 2) + '</pre>';
               break;
             case "Array":
-              text = '<div class="cell">' + JSON.stringify(value) + '</div>';
+              text = '<pre class="cell">' + JSON.stringify(value) + '</pre>';
               break;
             default:
-              text = '<div class="cell">' + Handsontable.helper.stringify(value) + '</div>';
+              text = '<div class="cell">' + escapeHTML(Handsontable.helper.stringify(value)) + '</div>';
           }
 
           td.innerHTML = text;
-
           return td;
         }
 
-        // Register an alias
         Handsontable.renderers.registerRenderer('jsonRenderer', customRenderer);
-
       })(Handsontable);
     </script>
     <script>
@@ -94,8 +101,12 @@
         columns: columns,
         manualColumnResize: true,
         manualRowResize: true,
-        modifyColWidth: function(width, col){
+        renderAllRows: true,
+        modifyColWidth: (width, col)=>{
           if(width > maxColWidth) return maxColWidth;
+        },
+        afterRenderer: (td, row, column, prop, value, cellProperties)=>{
+          td.innerHTML = '<div class="wrapper"><div class="wrapped">' + td.innerHTML + '</div></div>';
         }
       }
       Object.assign(actualConfig, config);
@@ -126,10 +137,7 @@
       }
 
       hot.updateSettings({
-          colWidths: colWidths
-      });
-
-      hot.updateSettings({
+          colWidths: colWidths,
           modifyColWidth: ()=>{}
       });
     </script>

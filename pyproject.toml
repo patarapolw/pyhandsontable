@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pyhandsontable"
-version = "0.2.12.6"
+version = "0.2.14"
 description = "View a list of dictionaries or a 2-D array, in HandsOnTable, in Jupyter Notebook."
 authors = ["Pacharapol Withayasakpunt <patarapolw@gmail.com>"]
 license = "MIT"

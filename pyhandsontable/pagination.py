@@ -15,6 +15,7 @@ class PagedViewer:
         self.records = list(records)
         self.chunk_size = chunk_size
         self.viewer_kwargs = kwargs
+        self.viewer_kwargs.setdefault('config', dict()).setdefault('rowHeaders', False)
 
     @property
     def num_pages(self):

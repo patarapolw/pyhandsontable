@@ -63,8 +63,12 @@ It is also possible to view all entries at once, but it could be bad, if there a
     columns: columns,
     manualColumnResize: true,
     manualRowResize: true,
-    modifyColWidth: function(width, col){
+    renderAllRows: true,
+    modifyColWidth: (width, col)=>{
         if(width > maxColWidth) return maxColWidth;
+    },
+    afterRenderer: (td, row, column, prop, value, cellProperties)=>{
+        td.innerHTML = td.innerHTML.slice(0, config.charLimit || 5000);
     }
 }
 ```
