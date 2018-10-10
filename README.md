@@ -124,10 +124,9 @@ PagedViewer(data=data_matrix, renderers={
 
 ## License
 
-* By installing, copying, or otherwise using this software, you agree to be bound by the terms
- * of its General Software License Terms ("Terms") outlined in a file "handsontable-pro-general-terms.pdf"
- * available in the main directory of the software repository.
- * This software is copyrighted and protected by copyright laws and international treaties.
- * 
- * You shall obtain a commercial license for this software at handsontable.com.
- 
+> By installing, copying, or otherwise using this software, you agree to be bound by the terms
+> of its General Software License Terms ("Terms") outlined in a file "handsontable-pro-general-terms.pdf"
+> available in the main directory of the software repository.
+> This software is copyrighted and protected by copyright laws and international treaties.
+> 
+> You shall obtain a commercial license for this software at handsontable.com.
