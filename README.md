@@ -68,7 +68,7 @@ It is also possible to view all entries at once, but it could be bad, if there a
         if(width > maxColWidth) return maxColWidth;
     },
     afterRenderer: (td, row, column, prop, value, cellProperties)=>{
-        td.innerHTML = td.innerHTML.slice(0, config.charLimit || 5000);
+        td.innerHTML = '<div class="wrapper"><div class="wrapped">' + td.innerHTML + '</div></div>';
     }
 }
 ```
@@ -120,7 +120,8 @@ PagedViewer(data=data_matrix, renderers={
 
 ## Related projects
 
-- https://github.com/patarapolw/tinydb-viewer
+- [htmlviewer](https://github.com/patarapolw/htmlviewer) - similar in concept to this project, but does not use HandsOnTable.js
+- [TinyDB-viewer](https://github.com/patarapolw/tinydb-viewer) - uses HandsOnTable.js and also allow editing in Jupyter Notebook. 
 
 ## License
 
