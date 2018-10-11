@@ -50,8 +50,6 @@ It is also possible to view all entries at once, but it could be bad, if there a
 - renderers: the renderers to use in generating the columns (see below.)
 - autodelete: whether the temporary HTML file should be autodeleted. (Default: True)
 - filename: filename of the temporary HTML file (default: 'temp.handsontable.html')
-- css: url of the Handsontable CSS
-- js: url of the Handsontable Javascript
 - config: add additional config as defined in https://docs.handsontable.com/pro/5.0.0/tutorial-introduction.html
   - This will override the default config (per key basis) which are:
   
@@ -125,9 +123,4 @@ PagedViewer(data=data_matrix, renderers={
 
 ## License
 
-> By installing, copying, or otherwise using this software, you agree to be bound by the terms
-> of its General Software License Terms ("Terms") outlined in a file "handsontable-pro-general-terms.pdf"
-> available in the main directory of the software repository.
-> This software is copyrighted and protected by copyright laws and international treaties.
-> 
-> You shall obtain a commercial license for this software at handsontable.com.
+This software includes [`handsontable.js`](https://github.com/handsontable/handsontable), which is MIT-licensed.
