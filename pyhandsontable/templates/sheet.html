@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
 
-    <style>{% include 'handsontable.full.css' %}</style>
+    <style>{% include 'handsontable.full.min.css' %}</style>
     <style>
 #hotArea {
   {% if width is defined %}
@@ -34,7 +34,7 @@
     <div id="hotArea"></div>
 
     <script>
-    {% include 'handsontable.full.js' %}
+    {% include 'handsontable.full.min.js' %}
     </script>
 
     <script>var data = {{ data|tojson }};</script>
